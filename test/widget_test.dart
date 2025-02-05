@@ -1,30 +1,24 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
 import 'package:prueba_tecnica_flutter/main.dart';
+import 'package:prueba_tecnica_flutter/features/posts/domain/fetch_posts_usecase.dart';
+import 'package:prueba_tecnica_flutter/features/users/domain/fetch_users_usecase.dart';
+import 'package:prueba_tecnica_flutter/features/posts/data/posts_repository.dart';
+import 'package:prueba_tecnica_flutter/features/users/data/user_repository.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  testWidgets('La aplicación se construye sin errores', (WidgetTester tester) async {
+    // ✅ Creamos instancias simuladas de los casos de uso
+    final fetchPostsUseCase = FetchPostsUseCase(PostsRepository());
+    final fetchUsersUseCase = FetchUsersUseCase(UserRepository());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    // ✅ Pasamos las instancias al MyApp
+    await tester.pumpWidget(MyApp(
+      fetchPostsUseCase: fetchPostsUseCase,
+      fetchUsersUseCase: fetchUsersUseCase,
+    ));
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // ✅ Verificamos que la app se muestra correctamente
+    expect(find.byType(MaterialApp), findsOneWidget);
   });
 }

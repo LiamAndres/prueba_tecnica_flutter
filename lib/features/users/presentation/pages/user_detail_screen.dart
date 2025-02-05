@@ -3,12 +3,12 @@
 ✔ Mostramos la información del usuario en una Card.
 ✔ Mostramos las publicaciones en una lista con Card, con título y descripción.
 ✔ Si no hay publicaciones, muestra "No hay publicaciones".
-✔ Usamos Provider para obtener los posts (lo configuraremos ahora).
+
  */
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../providers/posts_provider.dart';
+import '../../../posts/presentation/providers/posts_provider.dart';
 
 class UserDetailScreen extends StatefulWidget {
   final Map<String, dynamic> user;
