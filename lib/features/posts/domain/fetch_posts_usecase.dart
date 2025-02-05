@@ -4,14 +4,17 @@
 ✔ PostsProvider ahora llamará a FetchPostsUseCase en lugar de PostsRepository directamente.
  */
 
-import '../data/posts_repository.dart'; // ✅ Importamos el repositorio
+import '../data/posts_repository.dart';
+import '../../../core/usecases/usecase.dart';
 
-class FetchPostsUseCase {
+class FetchPostsUseCase extends UseCase<List<Map<String, dynamic>>, int> {
   final PostsRepository _repository;
 
-  FetchPostsUseCase(this._repository); // ✅ Constructor que recibe el repositorio
+  FetchPostsUseCase(this._repository);
 
-  Future<List<dynamic>> execute(int userId) async {
-    return await _repository.fetchPosts(userId); // ✅ Llama al repositorio
+  @override
+  Future<List<Map<String, dynamic>>> execute(int userId) async {
+    return List<Map<String, dynamic>>.from(await _repository.fetchPosts(userId));
   }
 }
+

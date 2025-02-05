@@ -8,8 +8,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:prueba_tecnica_flutter/features/users/presentation/pages/user_detail_screen.dart';
 import '../providers/user_provider.dart';
+import '../widgets/user_card.dart';
 
 class UserListScreen extends StatefulWidget {
   const UserListScreen({super.key});
@@ -81,74 +81,12 @@ class _UserListScreenState extends State<UserListScreen> {
                             itemCount: userProvider.users.length,
                             itemBuilder: (context, index) {
                               final user = userProvider.users[index];
-                              return _buildUserCard(user);
-                            },
-                          ),
+                              return UserCard(
+                                  user:
+                                      user);
+                            }),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildUserCard(Map<String, dynamic> user) {
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      elevation: 4,
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              user['name'],
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.green[800],
-              ),
-            ),
-            const SizedBox(height: 8),
-            Row(
-              children: [
-                Icon(Icons.phone, color: Colors.green[800]),
-                const SizedBox(width: 8),
-                Text(
-                  user['phone'],
-                  style: const TextStyle(fontSize: 16, color: Colors.black),
-                ),
-              ],
-            ),
-            const SizedBox(height: 4),
-            Row(
-              children: [
-                Icon(Icons.email, color: Colors.green[800]),
-                const SizedBox(width: 8),
-                Text(
-                  user['email'],
-                  style: const TextStyle(fontSize: 16, color: Colors.black),
-                ),
-              ],
-            ),
-            const SizedBox(height: 12),
-            Align(
-              alignment: Alignment.centerRight,
-              child: TextButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => UserDetailScreen(user: user),
-                    ),
-                  );
-                },
-                style: TextButton.styleFrom(
-                  foregroundColor: Colors.green[800],
-                ),
-                child: const Text("VER PUBLICACIONES"),
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }

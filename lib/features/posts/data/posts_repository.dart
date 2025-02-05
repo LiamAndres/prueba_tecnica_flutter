@@ -1,14 +1,14 @@
 import 'package:dio/dio.dart';
 
 class PostsRepository {
-  final Dio _dio = Dio(BaseOptions(baseUrl: "https://jsonplaceholder.typicode.com")); // ✅ Se inicializa Dio aquí
+  final Dio _dio = Dio(BaseOptions(baseUrl: "https://jsonplaceholder.typicode.com"));
 
   Future<List<dynamic>> fetchPosts(int userId) async {
     try {
       final response = await _dio.get("/posts", queryParameters: {"userId": userId});
-      return response.data; // ✅ Devuelve la lista de publicaciones
+      return List<Map<String, dynamic>>.from(response.data);
     } catch (e) {
-      throw Exception("Error al obtener publicaciones");
+      throw Exception("Error al obtener publicaciones: $e");
     }
   }
 }

@@ -9,6 +9,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../posts/presentation/providers/posts_provider.dart';
+import '../../../posts/presentation/widgets/post_card.dart';
 
 class UserDetailScreen extends StatefulWidget {
   final Map<String, dynamic> user;
@@ -48,9 +49,9 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                         itemCount: postsProvider.posts.length,
                         itemBuilder: (context, index) {
                           final post = postsProvider.posts[index];
-                          return _buildPostCard(post);
-                        },
-                      ),
+                          return PostCard(
+                              post: post);
+                        }),
           ),
         ],
       ),
@@ -80,31 +81,6 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                 Text(user['email'], style: const TextStyle(fontSize: 16)),
               ],
             ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildPostCard(Map<String, dynamic> post) {
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      elevation: 3,
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              post['title'],
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Colors.green[800],
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(post['body'], style: const TextStyle(fontSize: 16)),
           ],
         ),
       ),

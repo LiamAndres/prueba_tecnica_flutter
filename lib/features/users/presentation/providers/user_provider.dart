@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import '../../domain/fetch_users_usecase.dart';
 
 class UserProvider with ChangeNotifier {
-  final FetchUsersUseCase _fetchUsersUseCase; // ✅ Usamos FetchUsersUseCase
+  final FetchUsersUseCase _fetchUsersUseCase;
 
-  UserProvider(
-      this._fetchUsersUseCase); // ✅ Recibimos FetchUsersUseCase en el constructor
+  UserProvider(this._fetchUsersUseCase);
 
   List<dynamic> _users = [];
   List<dynamic> _filteredUsers = [];
@@ -22,7 +21,7 @@ class UserProvider with ChangeNotifier {
     notifyListeners();
 
     try {
-      _users = await _fetchUsersUseCase.execute(); // ✅ Usamos FetchUsersUseCase
+      _users = await _fetchUsersUseCase.execute(null); // ✅ Se pasa null como argumento
       _filteredUsers = _users;
     } catch (e) {
       _errorMessage = "Error al obtener usuarios: ${e.toString()}";
