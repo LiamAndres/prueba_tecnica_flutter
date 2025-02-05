@@ -24,8 +24,12 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => Provider.of<PostsProvider>(context, listen: false)
-        .fetchPosts(widget.user['id']));
+    Future.microtask(() async {
+      if (mounted) {
+        await Provider.of<PostsProvider>(context, listen: false)
+            .fetchPosts(widget.user['id']);
+      }
+    });
   }
 
   @override
@@ -49,8 +53,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                         itemCount: postsProvider.posts.length,
                         itemBuilder: (context, index) {
                           final post = postsProvider.posts[index];
-                          return PostCard(
-                              post: post);
+                          return PostCard(post: post);
                         }),
           ),
         ],

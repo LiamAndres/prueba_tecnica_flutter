@@ -22,8 +22,11 @@ class _UserListScreenState extends State<UserListScreen> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(
-        () => Provider.of<UserProvider>(context, listen: false).fetchUsers());
+    Future.microtask(() async {
+      if (mounted) {
+        await Provider.of<UserProvider>(context, listen: false).fetchUsers();
+      }
+    });
   }
 
   @override
@@ -81,9 +84,7 @@ class _UserListScreenState extends State<UserListScreen> {
                             itemCount: userProvider.users.length,
                             itemBuilder: (context, index) {
                               final user = userProvider.users[index];
-                              return UserCard(
-                                  user:
-                                      user);
+                              return UserCard(user: user);
                             }),
           ),
         ],
