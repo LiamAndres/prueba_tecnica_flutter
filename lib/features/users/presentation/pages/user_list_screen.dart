@@ -8,6 +8,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:prueba_tecnica_flutter/features/users/presentation/pages/user_detail_screen.dart';
 import '../providers/user_provider.dart';
 
 class UserListScreen extends StatefulWidget {
@@ -47,22 +48,16 @@ class _UserListScreenState extends State<UserListScreen> {
               children: [
                 const Text(
                   "Buscar usuario",
-                  style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.black54),
+                  style: TextStyle(fontSize: 16, color: Colors.black54),
                 ),
                 TextFormField(
                   onChanged: (query) => userProvider.filterUsers(query),
                   decoration: const InputDecoration(
                     border: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                          color: Colors.green,
-                          width: 2),
+                      borderSide: BorderSide(color: Colors.green, width: 2),
                     ),
                     focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                          color: Colors.green,
-                          width: 2),
+                      borderSide: BorderSide(color: Colors.green, width: 2),
                     ),
                   ),
                 ),
@@ -91,10 +86,6 @@ class _UserListScreenState extends State<UserListScreen> {
                           ),
           ),
         ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => userProvider.fetchUsers(),
-        child: const Icon(Icons.download),
       ),
     );
   }
@@ -143,7 +134,12 @@ class _UserListScreenState extends State<UserListScreen> {
               alignment: Alignment.centerRight,
               child: TextButton(
                 onPressed: () {
-                  // TODO: Navegar a la pantalla de detalles del usuario
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => UserDetailScreen(user: user),
+                    ),
+                  );
                 },
                 style: TextButton.styleFrom(
                   foregroundColor: Colors.green[800],
