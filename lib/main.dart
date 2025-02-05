@@ -2,7 +2,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'features/users/presentation/providers/user_provider.dart';
-import 'features/users/presentation/pages/user_list_screen.dart'; // ✅ Importado correctamente
+import 'features/users/presentation/pages/user_list_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         home:
-            const UserListScreen(), // ✅ Reemplazamos HomeScreen por UserListScreen
+            const UserListScreen(),
       ),
     );
   }

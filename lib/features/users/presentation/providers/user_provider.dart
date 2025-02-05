@@ -1,4 +1,3 @@
-
 /* 
 📌 ¿Qué hace esto?
 ✔ Verifica si los usuarios ya están almacenados en Hive antes de hacer la petición a la API.
@@ -13,10 +12,11 @@ import '../../../../core/network/api_service.dart';
 class UserProvider with ChangeNotifier {
   final ApiService _apiService = ApiService();
   List<dynamic> _users = [];
+  List<dynamic> _filteredUsers = [];
   bool _isLoading = false;
   String _errorMessage = '';
 
-  List<dynamic> get users => _users;
+  List<dynamic> get users => _filteredUsers;
   bool get isLoading => _isLoading;
   String get errorMessage => _errorMessage;
 
@@ -27,17 +27,38 @@ class UserProvider with ChangeNotifier {
 
     try {
       var box = await Hive.openBox('usersBox');
+
       if (box.isNotEmpty) {
-        _users = box.values.toList();
+        // Convertimos cada valor en un Map<String, dynamic> para evitar errores de tipo
+        _users = box.values.map((e) => Map<String, dynamic>.from(e)).toList();
       } else {
         _users = await _apiService.getUsers();
-        box.addAll(_users);
+        for (var user in _users) {
+          box.add(user);
+        }
       }
+
+      _filteredUsers = _users;
     } catch (e) {
       _errorMessage = "Error al obtener usuarios.";
     }
 
     _isLoading = false;
     notifyListeners();
+  }
+
+  // Método para filtrar usuarios por nombre
+  void filterUsers(String query) {
+    if (query.isEmpty) {
+      _filteredUsers =
+          List.from(_users); // Se mantiene la referencia correcta
+    } else {
+      _filteredUsers = _users
+          .where((user) =>
+              user['name'].toLowerCase().contains(query.toLowerCase()))
+          .toList();
+    }
+
+    notifyListeners(); // Actualiza la UI correctamente
   }
 }
