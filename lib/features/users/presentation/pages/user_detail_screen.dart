@@ -1,17 +1,26 @@
-/* 
-📌 ¿Qué hicimos?
-✔ Mostramos la información del usuario en una Card.
-✔ Mostramos las publicaciones en una lista con Card, con título y descripción.
-✔ Si no hay publicaciones, muestra "No hay publicaciones".
-
- */
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../posts/presentation/providers/posts_provider.dart';
 import '../../../posts/presentation/widgets/post_card.dart';
 
+/// 📌 `UserDetailScreen`  
+/// ✅ Pantalla que muestra los detalles de un usuario y sus publicaciones.  
+///  
+/// 🔹 **Características**:  
+///   - Muestra la información del usuario (`nombre, teléfono, email`).  
+///   - Recupera y muestra las publicaciones del usuario.  
+///   - Si no hay publicaciones, muestra un mensaje `"No hay publicaciones"`.  
+///  
+/// 🔹 **Dependencias**:  
+///   - `PostsProvider`: Se encarga de obtener las publicaciones.  
+///   - `PostCard`: Widget para mostrar cada publicación.  
+///  
+/// 🔹 **Ciclo de vida**:  
+///   - En `initState()`, llama a `fetchPosts(userId)` en `PostsProvider`.  
+///   - Usa `Future.microtask` para evitar problemas de contexto asíncrono.  
+///   - Valida `mounted` antes de acceder a `context` en `initState()`.  
 class UserDetailScreen extends StatefulWidget {
+  /// Mapa con la información del usuario seleccionado.
   final Map<String, dynamic> user;
 
   const UserDetailScreen({super.key, required this.user});
@@ -54,13 +63,15 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                         itemBuilder: (context, index) {
                           final post = postsProvider.posts[index];
                           return PostCard(post: post);
-                        }),
+                        },
+                      ),
           ),
         ],
       ),
     );
   }
 
+  /// 📌 Muestra la información del usuario en una `Card`.
   Widget _buildUserInfo(Map<String, dynamic> user) {
     return Card(
       margin: const EdgeInsets.all(16),

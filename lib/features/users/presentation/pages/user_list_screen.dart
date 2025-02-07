@@ -1,16 +1,25 @@
-/* 
-📌 ¿Qué hace esto?
-✔ Muestra la lista de usuarios almacenados o traídos de la API.
-✔ Tiene un botón flotante para recargar usuarios.
-✔ Maneja carga y errores con CircularProgressIndicator() y mensajes de error.
-
- */
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/user_provider.dart';
 import '../widgets/user_card.dart';
 
+/// 📌 `UserListScreen`  
+/// ✅ Pantalla principal que muestra la lista de usuarios.  
+///  
+/// 🔹 **Características**:  
+///   - Obtiene la lista de usuarios desde `UserProvider`.  
+///   - Permite filtrar usuarios en tiempo real mientras se escribe.  
+///   - Muestra indicadores de carga y mensajes de error.  
+///   - Usa `UserCard` para mostrar cada usuario.  
+///  
+/// 🔹 **Dependencias**:  
+///   - `UserProvider`: Se encarga de gestionar los usuarios y su estado.  
+///   - `UserCard`: Widget reutilizable para mostrar los datos de cada usuario.  
+///  
+/// 🔹 **Ciclo de vida**:  
+///   - En `initState()`, llama a `fetchUsers()` de `UserProvider`.  
+///   - Usa `Future.microtask` para evitar problemas con el contexto asíncrono.  
+///   - Valida `mounted` antes de acceder a `context` en `initState()`.  
 class UserListScreen extends StatefulWidget {
   const UserListScreen({super.key});
 

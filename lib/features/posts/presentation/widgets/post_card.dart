@@ -1,8 +1,27 @@
 import 'package:flutter/material.dart';
 
+/// 📌 `PostCard`
+/// Widget reutilizable para mostrar la información de una publicación.
+///
+/// 🔹 **Propósito**:
+///   - Representa visualmente una publicación dentro de la app.
+///   - Usa una `Card` con `elevation` para resaltar el contenido.
+///
+/// 🔹 **Propiedades**:
+///   - `post`: Recibe un `Map<String, dynamic>` con la información de la publicación.
+///     - `title`: Título de la publicación.
+///     - `body`: Contenido de la publicación.
+///
+/// 🔹 **Diseño**:
+///   - Usa `Padding` para un margen interno adecuado.
+///   - Muestra el título en negrita y con mayor tamaño.
+///   - Muestra el contenido en un tamaño estándar para facilitar la lectura.
 class PostCard extends StatelessWidget {
+  /// 📌 `post` → Mapa con los datos de la publicación.
   final Map<String, dynamic> post;
 
+  /// 📌 Constructor
+  /// - **Parámetro requerido**: `post` → Datos de la publicación.
   const PostCard({super.key, required this.post});
 
   @override
@@ -15,6 +34,7 @@ class PostCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            /// 📌 Título de la publicación
             Text(
               post['title'],
               style: TextStyle(
@@ -24,7 +44,12 @@ class PostCard extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 8),
-            Text(post['body'], style: const TextStyle(fontSize: 16)),
+
+            /// 📌 Contenido de la publicación
+            Text(
+              post['body'],
+              style: const TextStyle(fontSize: 16),
+            ),
           ],
         ),
       ),

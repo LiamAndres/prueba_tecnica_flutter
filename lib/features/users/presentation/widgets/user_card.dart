@@ -1,8 +1,22 @@
 import 'package:flutter/material.dart';
 import '../pages/user_detail_screen.dart';
 
+/// 📌 `UserCard`
+/// ✅ Widget reutilizable para mostrar la información de un usuario en una tarjeta.
+///
+/// 🔹 **Responsabilidades**:
+///   - Muestra el nombre, teléfono y correo del usuario.
+///   - Proporciona un botón para navegar a `UserDetailScreen`.
+///
+/// 🔹 **Propiedades**:
+///   - `user`: Recibe un `Map<String, dynamic>` con los datos del usuario.
+///
+/// 🔹 **Diseño**:
+///   - Se presenta en una `Card` con `elevation` para dar efecto visual.
+///   - Usa `Row` para mostrar iconos junto con la información de contacto.
+///   - Contiene un botón `TextButton` que permite navegar a la pantalla de detalles del usuario.
 class UserCard extends StatelessWidget {
-  final Map<String, dynamic> user;
+  final Map<String, dynamic> user; // ✅ Datos del usuario
 
   const UserCard({super.key, required this.user});
 
@@ -10,12 +24,13 @@ class UserCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      elevation: 4,
+      elevation: 4, // ✅ Agrega sombra a la tarjeta para destacar
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // 🔹 Nombre del usuario
             Text(
               user['name'],
               style: TextStyle(
@@ -25,6 +40,8 @@ class UserCard extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 8),
+
+            // 🔹 Teléfono del usuario
             Row(
               children: [
                 Icon(Icons.phone, color: Colors.green[800]),
@@ -36,6 +53,8 @@ class UserCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 4),
+
+            // 🔹 Correo electrónico del usuario
             Row(
               children: [
                 Icon(Icons.email, color: Colors.green[800]),
@@ -47,6 +66,8 @@ class UserCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 12),
+
+            // 🔹 Botón para ver publicaciones del usuario
             Align(
               alignment: Alignment.centerRight,
               child: TextButton(

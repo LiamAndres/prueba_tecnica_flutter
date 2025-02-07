@@ -9,35 +9,53 @@ import 'package:prueba_tecnica_flutter/features/users/domain/fetch_users_usecase
 import 'features/users/presentation/providers/user_provider.dart';
 import 'features/users/presentation/pages/user_list_screen.dart';
 
+/// 📌 `main()`
+/// ✅ Punto de entrada de la aplicación Flutter.
+/// ✅ Inicializa Hive para almacenamiento local.
+/// ✅ Crea e inyecta las dependencias siguiendo Clean Architecture.
+/// ✅ Lanza `MyApp`, que administra la configuración global.
 void main() async {
+  /// 🔹 Asegura que los bindings de Flutter estén inicializados antes de ejecutar código asíncrono.
   WidgetsFlutterBinding.ensureInitialized();
+
+  /// 🔹 Inicializa Hive para almacenamiento local.
   await Hive.initFlutter();
 
-  // ✅ Creamos instancias de los repositorios
+  // ✅ 1. Crear instancias de los repositorios (capa de datos)
   final postsRepository = PostsRepository();
-  final userRepository = UserRepository(); 
+  final userRepository = UserRepository();
 
-  // ✅ Creamos casos de uso
+  // ✅ 2. Crear instancias de los casos de uso (capa de dominio)
   final fetchPostsUseCase = FetchPostsUseCase(postsRepository);
   final fetchUsersUseCase = FetchUsersUseCase(userRepository);
 
+  // ✅ 3. Ejecutar la aplicación
   runApp(MyApp(
     fetchPostsUseCase: fetchPostsUseCase,
     fetchUsersUseCase: fetchUsersUseCase,
   ));
 }
 
+/// 📌 `MyApp`
+/// ✅ Configura `MultiProvider` para inyectar dependencias en toda la app.
+/// ✅ Define la pantalla principal como `UserListScreen`.
 class MyApp extends StatelessWidget {
   final FetchPostsUseCase fetchPostsUseCase;
   final FetchUsersUseCase fetchUsersUseCase;
 
-  const MyApp({super.key, required this.fetchPostsUseCase, required this.fetchUsersUseCase});
+  const MyApp(
+      {super.key,
+      required this.fetchPostsUseCase,
+      required this.fetchUsersUseCase});
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        /// 🔹 Inyectamos `UserProvider` con `fetchUsersUseCase`
         ChangeNotifierProvider(create: (_) => UserProvider(fetchUsersUseCase)),
+
+        /// 🔹 Inyectamos `PostsProvider` con `fetchPostsUseCase`
         ChangeNotifierProvider(create: (_) => PostsProvider(fetchPostsUseCase)),
       ],
       child: MaterialApp(
@@ -46,7 +64,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const UserListScreen(),
+        home: const UserListScreen(), // ✅ Pantalla principal
       ),
     );
   }
